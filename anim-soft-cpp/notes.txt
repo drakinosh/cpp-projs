@@ -1,0 +1,27 @@
+18 JUN 2017
+
+
+added layers but animation has gone out of whack.
+will fix it immediately.
+
+seems problem lies in drawing multiple sprites
+
+tried to create single image out of mutliple images
+function never completes first inner loop
+wonder why
+possible pixel access error
+
+^
+got error because i forgot to call image and texture's "create" method.
+successfully added layering
+
+26 JUN 2017
+
+added eraser, but freezes and gives segfault on clicking.
+will inspect it.
+
+successfully added erasing mechanism; played around, no problems
+so far.
+(insert exclamation of joy).
+
+note to self: playing mechanism assumes at least two layers
