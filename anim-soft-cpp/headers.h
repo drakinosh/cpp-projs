@@ -52,6 +52,20 @@ private:
     int x, y;
 };
 
+class SelectBox
+{
+public:
+    SelectBox(int startX, int startY, int w, int h);
+    int getX(); int getY();
+    int getW(); int getH();
+    void setPos(int x, int y);
+    void setSize(int w, int h);
+
+private:
+    int width, height;
+    int x, y;
+};
+
 
 
 int mainLoop();

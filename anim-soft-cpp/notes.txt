@@ -25,3 +25,13 @@ so far.
 (insert exclamation of joy).
 
 note to self: playing mechanism assumes at least two layers
+
+28 JUN 2017
+
+added simple rectangle-type shape.
+need to make it behave like a select box;
+click and drag must move pixels too.
+
+click-and-drag buggy; can move by clicking a new pos
+currently cannot get rid of select box rect after exiting select mode
+
