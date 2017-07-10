@@ -5,6 +5,7 @@
 #define COL_SWITCH_STRING "Switch Color"
 #define ERASE_STRING "Eraser"
 #define SELECT_STRING "Select"
+#define IMAGE_STRING "Load image"
 #define NIL "NIL"
 
 #define GLOBAL_BORDER_WIDTH 10
@@ -27,10 +28,12 @@ private:
     void  on_colSwitch_clicked();
     void on_erase_clicked();
     void on_select_clicked();
+    void on_image_clicked();
 
     Gtk::Button colSwitchBut;
     Gtk::Button eraseBut;
     Gtk::Button selectBut;
+    Gtk::Button imageBut;
     Gtk::Grid grid;
 };
 
@@ -69,6 +72,7 @@ public:
     int getW(); int getH();
     void setPos(int x, int y);
     void setSize(int w, int h);
+    sf::RectangleShape sebox_rect;
 
 private:
     int width, height;
@@ -80,6 +84,7 @@ private:
 int mainLoop();
 void switchCol();
 void commandSet(std::string s);
+void imageFromFile();
 
 #endif // PROJECT_HEADERS
 

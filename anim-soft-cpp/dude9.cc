@@ -27,6 +27,9 @@ const float FRATE = 100000;
 bool eraser_mode = false;
 bool select_mode = false;
 bool draw_mode = true;
+bool toLoad = false;
+
+sf::Image importImage;
 
 const int DEBUG = 1;
 
@@ -61,7 +64,19 @@ void commandSet(std::string s)
 
     
 }
-    
+
+void imageFromFile()
+{
+    std::string fname;
+    std::cout << "Filename: ";
+    std::cin >> fname;
+
+    importImage.loadFromFile(fname);
+    toLoad = true;
+
+    std::cout << "Select topLeft corner of image.\n";
+
+} 
 
 // ignoring out-of-bounds errors for now
 void floodFill(sf::Image& wind_img, sf::Vector2i nodePos, sf::Color tar, sf::Color rep)
@@ -422,6 +437,9 @@ int mainLoop()
                 
                 }
 
+
+
+
             }
 
 
@@ -495,7 +513,15 @@ int mainLoop()
                     }
                         
                         
+                } else if (toLoad) {
+                    sf::Vector2i pos = sf::Mouse::getPosition(window);
+                    toLoad = false;
+                    cur_frame.layer_list[li].ltext.update(importImage, pos.x, pos.y);
+
+                    if (DEBUG)
+                        std::cout << "Imported!\n";
                 }
+
             }
 
             else if (event.type == sf::Event::MouseButtonReleased) {
@@ -511,10 +537,6 @@ int mainLoop()
                     int w = p.x - seBox.getX();
                     int h = p.y - seBox.getY();
                     seBox.setSize(w, h);
-
-                    // now, set texture;
-
-
 
                     if (DEBUG) {
                         std::cout << "sebox lclick accom.\n";
@@ -643,19 +665,19 @@ int mainLoop()
                 int sz = eraser.getSize();
                 eraser_rect.setSize(sf::Vector2f(sz, sz));
                 eraser_rect.setOutlineColor(sf::Color::Black);
-                eraser_rect.setOutlineThickness(2);
+                eraser_rect.setOutlineThickness(1);
                 eraser_rect.setPosition(eraser.getX(), eraser.getY());
 
                 window.draw(eraser_rect);
 
 
             } else if (select_mode && sebox_fclick) {
-                sf::RectangleShape sebox_rect;
-                sebox_rect.setSize(sf::Vector2f(seBox.getW(), seBox.getH()));
-                sebox_rect.setOutlineColor(sf::Color::Black);
-                sebox_rect.setOutlineThickness(3);
-                sebox_rect.setPosition(seBox.getX(), seBox.getY());
-                sebox_rect.setFillColor(sf::Color::Transparent); // trans
+                //sf::RectangleShape sebox_rect;
+                seBox.sebox_rect.setSize(sf::Vector2f(seBox.getW(), seBox.getH()));
+                seBox.sebox_rect.setOutlineColor(sf::Color::Black);
+                seBox.sebox_rect.setOutlineThickness(3);
+                seBox.sebox_rect.setPosition(seBox.getX(), seBox.getY());
+                seBox.sebox_rect.setFillColor(sf::Color::Transparent); // trans
 
                 if (DEBUG) {
                     std::cout << "draw srect w: " << seBox.getW();
@@ -664,7 +686,7 @@ int mainLoop()
                     std::cout << " y: " << seBox.getY() << std::endl;
                 }
 
-                window.draw(sebox_rect);
+                window.draw(seBox.sebox_rect);
             }
                 
             sprite.setTexture(cur_frame.layer_list[li].ltext);
