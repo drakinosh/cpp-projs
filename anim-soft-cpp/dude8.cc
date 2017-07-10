@@ -24,6 +24,10 @@ stored above.
 const int RAD = 8;
 const float FRATE = 100000;
 
+bool eraser_mode = false;
+bool select_mode = false;
+bool draw_mode = true;
+
 const int DEBUG = 1;
 
 sf::Color col_green(0, 255, 0);
@@ -32,6 +36,8 @@ sf::Color fill_col(0, 0, 255);
 sf::Color tar_col(255, 255, 255);
 sf::Color col_def = col_green;
 
+std::string command;
+
 void switchCol()
 {
     if (col_def == col_green)
@@ -39,6 +45,23 @@ void switchCol()
     else
         col_def = col_green;
 }
+
+// eraser or select
+void commandSet(std::string s)
+{
+    command = s;
+
+    // if already in said mode,
+    // toggle
+
+    if (eraser_mode && s == "eraser")
+        command = "neraser";
+    if (select_mode && s == "select")
+        command = "nselect";
+
+    
+}
+    
 
 // ignoring out-of-bounds errors for now
 void floodFill(sf::Image& wind_img, sf::Vector2i nodePos, sf::Color tar, sf::Color rep)
@@ -242,12 +265,13 @@ int mainLoop()
     int play_mode = 0;
     int layer_num = 0; // first layer
     int li = 0;
-
+    
+    /*
     bool eraser_mode = false;
     bool draw_mode = true;
     bool select_mode = false;
+    */
 
-    std::string command;
     
     Eraser eraser(10, 0, 0);
     SelectBox seBox(0, 0, 0, 0);
@@ -365,6 +389,8 @@ int mainLoop()
                     std::cout << "command: ";
                     std::cin >> command;
 
+                    /*
+
                     if (command == "eraser") {
                         eraser_mode = true;
                         draw_mode = false;
@@ -391,6 +417,7 @@ int mainLoop()
                         seBox.setSize(0, 0);
 
                     }
+                    */
 
                 
                 }
@@ -493,6 +520,62 @@ int mainLoop()
             }
 
         }
+
+        // check commands
+        if (command == "eraser") {
+                eraser_mode = true;
+                draw_mode = false;
+
+                std::cout << "eraser_mode!\n";
+
+            } else if (command == "neraser") {
+                eraser_mode = false;
+                draw_mode = true;
+            
+            } else if (command == "select") {
+                select_mode = true;
+                draw_mode = false;
+                std::cout << "select_mode!\n";
+
+            } else if (command == "nselect") {
+                select_mode = false;
+                draw_mode = true;
+
+                // back to square one;
+                sebox_fclick = 0;
+                sebox_lclick = 0;
+                seBox.setPos(0, 0);
+                seBox.setSize(0, 0);
+
+            }else if (command == "eraser") {
+                eraser_mode = true;
+                draw_mode = false;
+
+                std::cout << "eraser_mode!\n";
+
+            } else if (command == "neraser") {
+                eraser_mode = false;
+                draw_mode = true;
+    
+            } else if (command == "select") {
+                select_mode = true;
+                draw_mode = false;
+                std::cout << "select_mode!\n";
+
+            } else if (command == "nselect") {
+                select_mode = false;
+                draw_mode = true;
+
+                // back to square one;
+                sebox_fclick = 0;
+                sebox_lclick = 0;
+                seBox.setPos(0, 0);
+                seBox.setSize(0, 0);
+            }
+        
+        // after checking command, make NIL;
+        command = NIL;
+
 
         sf::Vector2i pos = sf::Mouse::getPosition(window);
         eraser.setPos(pos.x, pos.y);

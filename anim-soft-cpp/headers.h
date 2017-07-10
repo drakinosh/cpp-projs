@@ -3,12 +3,15 @@
 
 #define NEW_CANVAS_STRING "New Canvas"
 #define COL_SWITCH_STRING "Switch Color"
-
+#define ERASE_STRING "Eraser"
+#define SELECT_STRING "Select"
+#define NIL "NIL"
 
 #define GLOBAL_BORDER_WIDTH 10
 
 #include <gtkmm/window.h>
 #include <gtkmm/button.h>
+#include <gtkmm/grid.h>
 #include <SFML/Graphics.hpp>
 
 
@@ -22,7 +25,13 @@ public:
 
 private:
     void  on_colSwitch_clicked();
+    void on_erase_clicked();
+    void on_select_clicked();
+
     Gtk::Button colSwitchBut;
+    Gtk::Button eraseBut;
+    Gtk::Button selectBut;
+    Gtk::Grid grid;
 };
 
 class Layer
@@ -70,6 +79,7 @@ private:
 
 int mainLoop();
 void switchCol();
+void commandSet(std::string s);
 
 #endif // PROJECT_HEADERS
 
