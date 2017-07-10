@@ -223,20 +223,28 @@ void moveImage(int x, int y, int x1, int y1, sf::Texture& text, SelectBox sb)
         return;
 
     sf::Image im = text.copyToImage();
+    sf::Image back(im); // copy cons
     
     // change pixels in rect area (new)
     int i, j;
     int w = sb.getW();
     int h = sb.getH();
 
+    // set prev rect to white
+    for (i = x; i <= x + w; i++)
+        for (j = y; j <= y + h; j++)
+            im.setPixel(i, j, tar_col);
+
     for (i = x1; i <= x1 + w; i++) {
         for (j = y1; j <= y1 + h; j++) {
-        
+     
             // set it to corresponding prev pixel
-            sf::Color prev = im.getPixel(x + (i-x1), y + (j -y1));
+            sf::Color prev = back.getPixel(x + (i-x1), y + (j -y1));
+
+            //im.setPixel(x + (i - x1), y + (j - y1), tar_col);
             im.setPixel(i, j, prev);
             // set prev pixel to white
-            im.setPixel(x + (i-x1), y + (j-y1), tar_col);
+            //im.setPixel(x + (i-x1), y + (j-y1), tar_col);
         }
     }
 
@@ -508,6 +516,10 @@ int mainLoop()
                         if (!isInsideRect(pos.x, pos.y, seBox)) {
                             moveImage(seBox.getX(), seBox.getY(), pos.x, pos.y,
                                         cur_frame.layer_list[li].ltext, seBox);
+
+                            if (DEBUG)
+                                std::cout << "X change: " << pos.x - seBox.getX();
+
                             seBox.setPos(pos.x, pos.y);
                         }
                     }
