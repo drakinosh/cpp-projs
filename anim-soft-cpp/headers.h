@@ -13,6 +13,10 @@
 #include <gtkmm/window.h>
 #include <gtkmm/button.h>
 #include <gtkmm/grid.h>
+#include <gtkmm/image.h>
+#include <gtkmm/dialog.h>
+#include <gtkmm/entry.h>
+
 #include <SFML/Graphics.hpp>
 
 
@@ -25,15 +29,31 @@ public:
     virtual ~MainWind();
 
 private:
-    void  on_colSwitch_clicked();
+    void on_colSwitch_clicked();
     void on_erase_clicked();
     void on_select_clicked();
     void on_image_clicked();
+    void on_export_clicked();
+    void on_Savefile_clicked();
 
     Gtk::Button colSwitchBut;
     Gtk::Button eraseBut;
     Gtk::Button selectBut;
     Gtk::Button imageBut;
+    Gtk::Button exportBut;
+    Gtk::Button saveBut;
+    Gtk::Grid grid;
+    Gtk::Entry ent;
+    Gtk::Dialog diag;
+};
+
+class LayerWind : public Gtk::Window
+{
+public:
+    LayerWind();
+    virtual ~LayerWind();
+
+private:
     Gtk::Grid grid;
 };
 
@@ -85,6 +105,7 @@ int mainLoop();
 void switchCol();
 void commandSet(std::string s);
 void imageFromFile();
+void saveFile(std::string fname);
 
 #endif // PROJECT_HEADERS
 

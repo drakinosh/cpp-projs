@@ -40,7 +40,10 @@ sf::Color tar_col(255, 255, 255);
 sf::Color col_def = col_green;
 
 std::string command;
+std::string filename;
 
+
+void getTotalImage(sf::Image, sf::Image, sf::Image&);
 void switchCol()
 {
     if (col_def == col_green)
@@ -62,8 +65,38 @@ void commandSet(std::string s)
     if (select_mode && s == "select")
         command = "nselect";
 
-    
 }
+
+void saveFile(std::string fn)
+{
+    command = "save_proj";
+    filename = "unt";
+}
+
+
+void saveAnimation(std::vector<Frame> flist, std::string fname)
+{
+    int i, j;
+    i = 0;
+    j = 0;
+    sf::Image temp;
+    temp.create(WIDTH, HEIGHT);
+
+
+    // two layers only
+    for (j = 1; j < flist.size(); j++) {
+        Frame frame = flist[j];
+        sf::Image i1 = frame.layer_list[0].ltext.copyToImage();
+        sf::Image i2 = frame.layer_list[1].ltext.copyToImage();
+        getTotalImage(i1, i2, temp);
+
+        if (DEBUG)
+            std::cout << "IMage geddto\n";
+
+        temp.saveToFile(fname + "_" + std::to_string(i) + ".jpg");
+        i++;
+    }
+} 
 
 void imageFromFile()
 {
@@ -77,6 +110,8 @@ void imageFromFile()
     std::cout << "Select topLeft corner of image.\n";
 
 } 
+
+
 
 // ignoring out-of-bounds errors for now
 void floodFill(sf::Image& wind_img, sf::Vector2i nodePos, sf::Color tar, sf::Color rep)
@@ -609,6 +644,10 @@ int mainLoop()
                 sebox_lclick = 0;
                 seBox.setPos(0, 0);
                 seBox.setSize(0, 0);
+            
+            } else if (command == "save_proj") {
+                std::cout << "Saving animation ...\n";
+                saveAnimation(frame_list, filename);
             }
         
         // after checking command, make NIL;
@@ -735,6 +774,8 @@ int mainLoop()
             sf::Image totalImg;
             totalImg.create(WIDTH, HEIGHT);
             getTotalImage(img1, img2, totalImg);
+
+
 
             sf::Texture t; // note: inefficient
             t.create(WIDTH, HEIGHT);

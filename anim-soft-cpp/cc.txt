@@ -1,1 +1,1 @@
-g++ -o hashire dude8.cc Tools.cc Frame.cc Layer.cc main.cc MainWind.cc -lsfml-system -lsfml-window -lsfml-graphics `pkg-config gtkmm-3.0 --cflags --libs`
+g++ -o hashire dude9.cc Tools.cc Frame.cc Layer.cc main.cc MainWind.cc LayerWind.cc -lsfml-system -lsfml-window -lsfml-graphics `pkg-config gtkmm-3.0 --cflags --libs`
