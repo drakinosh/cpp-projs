@@ -16,8 +16,14 @@
 #include <gtkmm/image.h>
 #include <gtkmm/dialog.h>
 #include <gtkmm/entry.h>
-
+#include <gdkmm/pixbuf.h>
+#include <gtkmm/scrolledwindow.h>
+#include <gtkmm/scrollbar.h>
+#include <gtkmm/adjustment.h>
+#include <gtkmm/layout.h>
+#include <glibmm/refptr.h>
 #include <SFML/Graphics.hpp>
+#include <gtkmm.h>
 
 
 
@@ -47,6 +53,7 @@ private:
     Gtk::Dialog diag;
 };
 
+
 class LayerWind : public Gtk::Window
 {
 public:
@@ -55,6 +62,11 @@ public:
 
 private:
     Gtk::Grid grid;
+    Gtk::Image img;
+    Gtk::Image img2;
+    Gtk::Layout lout;
+    Gtk::ScrolledWindow sw;
+    Glib::RefPtr<Gtk::Adjustment> m_adjustment;
 };
 
 class Layer

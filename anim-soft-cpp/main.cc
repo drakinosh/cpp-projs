@@ -13,8 +13,8 @@ int main(int argc, char *argv[])
     MainWind mw;
     mw.show();
 
-    //LayerWind lw;
-    //lw.show();
+    LayerWind lw;
+    lw.show();
 
     //app->add_window(mw);
 

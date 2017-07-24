@@ -10,6 +10,7 @@ stored above.
 
 */
 
+#include <cstdlib>
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <vector>
@@ -52,6 +53,18 @@ void switchCol()
         col_def = col_green;
 }
 
+// returns padded string (4 char wide)
+// for use with ffmpeg
+std::string getPadded(int n)
+{
+    if (n < 9)
+        return ("000" + std::to_string(n));
+    else if (n >= 10 && n <= 99)
+        return ("00" + std::to_string(n));
+    else if(n >= 100 && n <= 999)
+        return ("0" + std::to_string(n));
+}
+
 // eraser or select
 void commandSet(std::string s)
 {
@@ -70,7 +83,7 @@ void commandSet(std::string s)
 void saveFile(std::string fn)
 {
     command = "save_proj";
-    filename = "unt";
+    filename = fn;
 }
 
 
@@ -93,9 +106,19 @@ void saveAnimation(std::vector<Frame> flist, std::string fname)
         if (DEBUG)
             std::cout << "IMage geddto\n";
 
-        temp.saveToFile(fname + "_" + std::to_string(i) + ".jpg");
+        temp.saveToFile(fname + "_" + getPadded(i) + ".jpg");
         i++;
     }
+
+    // assume four padded
+    // save as `fname.mp4`
+    std::string p1 = "ffmpeg -framerate 15 -i ";
+    std::string p2 = "_%04d.jpg -c:v libx264 -profile:v high -crf 20 -pix_fmt yuv420p ";
+    std::string p3 = ".mp4";
+
+    system((p1 + fname + p2 + fname + p3).c_str());
+
+
 } 
 
 void imageFromFile()
