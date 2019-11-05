@@ -1,5 +1,11 @@
 ========================================2D-ANIMSOFT===============================================
-
+Semester project for Kathmandu University
+Members:
+    * Sanskar Chand ( 08 )
+    * Alex Shrestha ( 40 )
+    * Rujwol Shrestha ( 50 )
+    * Bishal Sunchury ( 55 )
+    
 The compilation command is in cc.txt
 
 #MAIN
